@@ -23,7 +23,7 @@ api.addPostDeployStep('simpleDB', (options, lambdaDetails, utils) => {
     .then(() => {
       if (options['configure-simpleDB']) {
         console.log(`\n\n${color.green}SimpleDB setup${color.reset}\n`);
-        console.log(`\nPlease enter the IAM keys to access ${color.cyan}SimpleDB{color.reset}\n`);
+        console.log(`\nPlease enter the IAM keys to access ${color.cyan}SimpleDB${color.reset}\n`);
 
         return prompt(['SimpleDB Key ID', 'SimpleDB Secret Key'])
           .then(results => {

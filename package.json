@@ -1,0 +1,24 @@
+{
+  "name": "simple-bot",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "Simple bot example for claudia bot builder",
+  "scripts": {
+    "create": "claudia create --region us-east-1 --api-module api",
+    "configure-telegram": "claudia update --configure-telegram-bot",
+    "start": "ntl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stojanovic/bot-builder.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "huh": "^1.1.4",
+    "claudia-bot-builder": "^2.1.0"
+  },
+  "devDependencies": {
+    "claudia": "^2.1.1",
+    "ntl": "^1.1.2"
+  }
+}

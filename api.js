@@ -23,17 +23,16 @@ api.addPostDeployStep('simpleDB', (options, lambdaDetails, utils) => {
     .then(() => {
       if (options['configure-simpleDB']) {
         console.log(`\n\n${color.green}SimpleDB setup${color.reset}\n`);
-        console.log(`\nFollowing info is required for the setup, for more info check the documentation.\n`);
-        console.log(`\nYour Telegram bot Request URL (POST only) is ${color.cyan}${lambdaDetails.apiUrl}/telegram${color.reset}\n`);
-        console.log(`\nIf you want your bot to receive inline queries\n just send /setinline to the @BotFather on your Telegram client and choose your bot\n`);
+        console.log(`\nPlease enter the IAM keys to access ${color.cyan}SimpleDB{color.reset}\n`);
 
-        return prompt(['SimpleDB secrets'])
+        return prompt(['SimpleDB Key ID', 'SimpleDB Secret Key'])
           .then(results => {
             const deployment = {
               restApiId: lambdaDetails.apiId,
               stageName: lambdaDetails.alias,
               variables: {
-                simpleDBSecrets: results['SimpleDB secrets']
+                simpleDBKEY: results['SimpleDB Key ID'],
+                simpleDBSecret: results['SimpleDB Secret Key']
               }
             };
 
@@ -41,7 +40,7 @@ api.addPostDeployStep('simpleDB', (options, lambdaDetails, utils) => {
           });
       }
     })
-    .then(() => `${lambdaDetails.apiUrl}/telegram`);
+    .then(() => `Configuration saved`);
 });
 
 api.any('/echo', function (request) {

@@ -14,8 +14,10 @@
   },
   "license": "MIT",
   "dependencies": {
+    "claudia-bot-builder": "^2.1.0",
     "huh": "^1.1.4",
-    "claudia-bot-builder": "^2.1.0"
+    "simpledb": "^0.2.0",
+    "souffleur": "^2.0.1"
   },
   "devDependencies": {
     "claudia": "^2.1.1",

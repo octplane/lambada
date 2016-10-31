@@ -15,7 +15,7 @@ const api = botBuilder(request => {
   console.log('Received message:', JSON.stringify(request, null, 2));
   messages.push(request);
 
-  return `Your message is very important to us. The problem was caused by ${excuse.get()}`;
+  return `Your message is very important to us (we have ${messages.length} messages). The problem was caused by ${excuse.get()}`;
 });
 
 api.addPostDeployStep('simpleDB', (options, lambdaDetails, utils) => {
@@ -32,7 +32,7 @@ api.addPostDeployStep('simpleDB', (options, lambdaDetails, utils) => {
               stageName: lambdaDetails.alias,
               variables: {
                 simpleDBKEY: results['SimpleDB Key ID'],
-                simpleDBSecret: results['SimpleDB Secret Key']
+                simpleDBSecret: new Buffer(results['SimpleDB Secret Key']).toString('base64')
               }
             };
 
@@ -49,8 +49,17 @@ api.any('/echo', function (request) {
 });
 
 
-api.get('/greet', function (request) {
-    return telegramReply(messages[0], "Coucou !", request.env.telegramAccessToken);
+api.post('/greet', function (request) {
+    console.log('Received message:', JSON.stringify(request, null, 2));
+    return telegramReply(messages[0], "hop!", request.env.telegramAccessToken);
+});
+
+
+api.get('db', function(request) {
+  const aki = request.env.simpleDBKEY;
+  const sak = Buffer(request.env.simpleDBSecret, 'base64').toString('ascii');
+  
+
 });
 
 module.exports = api;

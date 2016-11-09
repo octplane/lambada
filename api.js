@@ -18,16 +18,13 @@ const api = botBuilder(request => {
   return `Your message is very important to us (we have ${messages.length} messages). The problem was caused by ${excuse.get()}`;
 });
 
-api.any('/echo', function (request) {
-	'use strict';
-	return request;
-});
-
 api.post('/greet', function (request) {
     console.log('Received message:', JSON.stringify(request, null, 2));
     return telegramReply(messages[0], "hop!", request.env.telegramAccessToken);
 });
 
+// takes an url and selectors (comma separated)
+// returns a dictionary of each selectors and their text content
 api.get('/jquery', (request) => {
   'use strict';
   const url = request.queryString.url;
@@ -41,7 +38,7 @@ api.get('/jquery', (request) => {
   ).then(($) => {
      return selectors.reduce(
        (h, sel) => {
-         h[sel]=$(sel).html();
+         h[sel]=$(sel).text().trim();
         return h;
       }, {});
   }).catch((err) => {
